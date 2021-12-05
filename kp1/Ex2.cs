@@ -1,33 +1,37 @@
-using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
+using System;
+using System.Collections.Generic;
 
-    class StringAnalyzer
+class StringAnalyzer
     {
         [Test]
         public void Test1()
         {
-            Assert.AreEqual("d", first_non_repeating_letter("aoaoaoadaoaoao"));
+            Assert.AreEqual("There are no unique characters", first_non_repeating_letter("testtest"));
         }
         [Test]
         public void Test2()
         {
-            Assert.AreEqual("f", first_non_repeating_letter("AAOOAOAOddfdda"));
+            Assert.AreEqual("k", first_non_repeating_letter("testKtest"));
         }
         public string first_non_repeating_letter(string data)
-        {
-            string loweredData = data.ToLower();
-            List<char> chars = loweredData.Select(ch => ch).Distinct().ToList(); // get all characters in string
-            foreach (var item in chars)
-            {
-                if (loweredData.Count(ch => ch == item) == 1) 
-                {
-                    int Index;
-                    if (data.IndexOf(item) == -1) Index = data.IndexOf(item.ToString().ToUpper()); // character is actually uppercase
-                    else Index = data.IndexOf(item); // character is actually lowercase
-                    return data[Index].ToString();
-                }
-            }   
-            return "";
-        }
+        {   
+            string answer = "There are no unique characters";
+            string Data = data.ToLower();
+            char[] charArray = Data.ToCharArray();
+            var Distinct = charArray.GroupBy(x => x)
+              .Where(g => g.Count() == 1)
+              .Select(y => y.Key)
+              .ToList();
+
+            if (Distinct.Any()){
+                return Distinct[0].ToString();
+            }
+            else{
+                return answer;
+            }
+              } 
+            
+        
     } 
