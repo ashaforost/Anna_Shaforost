@@ -65,26 +65,17 @@ namespace Selenium
 
             driver.FindElement(By.Id("searchSystemUser_userName")).SendKeys(username);
             driver.FindElement(By.Id("searchBtn")).Click();
-            if (IsElementPresent(By.XPath("//*[@id=\"resultTable\"]/tbody/tr/td[2]/a"))){
-                Assert.Pass();
-            }
 
-            else{
-                Assert.Fail();
-            }
+            var isUserFound = IsElementPresent(By.XPath("//*[@id=\"resultTable\"]/tbody/tr/td[2]/a"));
+            Assert.IsTrue(isUserFound);
             
         }
 
           public void CheckUserInGrid(string username){
             driver.FindElement(By.Id("resetBtn")).Click();
-
-            if (driver.FindElement(By.LinkText(username)).Displayed){
-                Assert.Pass();
-            }
-            else {
-                Assert.Fail();
-
-            }
+            var isUserInGrid = driver.FindElement(By.LinkText(username)).ToString();
+            Assert.IsNotEmpty(isUserInGrid);
+            
 
         }
 
@@ -97,6 +88,13 @@ namespace Selenium
             driver.FindElement(By.Id("ohrmList_chkSelectRecord_"+index)).Click();
             driver.FindElement(By.Id("btnDelete")).Click();
             driver.FindElement(By.Id("dialogDeleteBtn")).Click();
+
+
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+
+            var isUserInGrid = driver.FindElement(By.LinkText(username)).ToString();
+            Assert.IsEmpty(isUserInGrid);
+            driver.Close();
 
         }
 
