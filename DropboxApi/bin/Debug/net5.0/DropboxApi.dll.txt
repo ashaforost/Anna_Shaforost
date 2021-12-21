@@ -1,3 +1,3 @@
-DropboxApi.DropboxApiTests.DeleteFile
-DropboxApi.DropboxApiTests.GetMetadata
-DropboxApi.DropboxApiTests.UploadFile
+DropboxApi.DropboxApiTests._1UploadFile
+DropboxApi.DropboxApiTests._2GetMetadata
+DropboxApi.DropboxApiTests._3DeleteFile

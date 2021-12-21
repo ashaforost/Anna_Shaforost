@@ -8,7 +8,7 @@ using System.Threading;
 
 namespace DropboxApi
 {
-    [TestFixture]
+    [TestFixture, SingleThreadedAttribute]
     public class DropboxApiTests 
     {
         private IRestClient client;
@@ -23,52 +23,54 @@ namespace DropboxApi
             token = "yaxOaoluGQMAAAAAAAAAAR2jGHgIMdM6C-B2mXcn2dWhPsKKJhRJtUeWreK4CloV";
         }
 
-        [Test]
-        public void UploadFile()
+        
+
+        [Test, Order(1)]
+        public void _1UploadFile()
         {
+            
             client = new RestClient("https://content.dropboxapi.com/2/files/upload")
             {
                 Timeout = -1
                 
             };
-            client.AddDefaultHeader("Connection", "close");
-
-            request.AddHeader("Dropbox-API-Arg", "{\"path\": \"/test2.txt\",\"mode\": \"overwrite\",\"autorename\": true,\"mute\": false,\"strict_conflict\": false}");
+            request.AddHeader("Dropbox-API-Arg", "{\"path\": \"/test.txt\",\"mode\": \"overwrite\",\"autorename\": true,\"mute\": false,\"strict_conflict\": false}");
             request.AddHeader("Content-type", "application/octet-stream");
             request.AddHeader("Authorization", "Bearer " + token);
             request.AddParameter("test", ParameterType.RequestBody);
             response = client.Execute(request);
           
             response.IsSuccessful.Should().BeTrue();
+
             
 
         }
 
-        [Test]
-        public void GetMetadata()
+        [Test, Order(2)]
+        public void _2GetMetadata()
         {
             
             client = new RestClient("https://api.dropboxapi.com/2/files/get_metadata")  {
                 Timeout = -1
             };
-            client.AddDefaultHeader("Connection", "close");
+
             request.AddHeader("Content-Type", "application/json");
             request.AddHeader("Authorization", "Bearer " + token);
-            request.AddParameter("application/json", "{\"path\": \"/text.txt\",\"include_media_info\": false,\"include_deleted\": false,\"include_has_explicit_shared_members\": false}", ParameterType.RequestBody);
+            request.AddParameter("application/json", "{\"path\": \"/test.txt\",\"include_media_info\": false,\"include_deleted\": false,\"include_has_explicit_shared_members\": false}", ParameterType.RequestBody);
             response = client.Execute(request);  
             response.IsSuccessful.Should().BeTrue();
             
 
         }
 
-        [Test]
-        public void DeleteFile()
+        [Test, Order(3)]
+        public void _3DeleteFile()
         {
+
             client = new RestClient("https://api.dropboxapi.com/2/files/delete_v2")
             {
                 Timeout = -1
             };
-            client.AddDefaultHeader("Connection", "close");
             request.AddHeader("Content-type", "application/json");
             request.AddHeader("Authorization", "Bearer " + token);
             request.AddParameter("application/json", "{\"path\": \"/test.txt\"\r\n}", ParameterType.RequestBody);

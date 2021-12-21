@@ -50,6 +50,10 @@
               "target": "Package",
               "version": "[2.2.8, )"
             },
+            "Microsoft.Net.Http.Headers": {
+              "target": "Package",
+              "version": "[2.2.8, )"
+            },
             "Microsoft.TestPlatform.TestHost": {
               "target": "Package",
               "version": "[17.0.0, )"
